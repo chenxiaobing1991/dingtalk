@@ -3,6 +3,7 @@
 
 namespace Cxb\DingTalk\Provider;
 
+use Cxb\DingTalk\Exception\BadQueryDingTalkExection;
 use Cxb\GuzzleHttp\ResponseClient;
 
 /**
@@ -23,10 +24,10 @@ trait AccessToken
      *缓存命名空间
      */
     private function  getAccessTokenNameSpace():string {
-          return join(',',[
+          return join(':',[
               'token',
               static::class,
-              $this->config->getAppId,
+              $this->config->getAppId(),
           ]);
     }
 
@@ -34,22 +35,20 @@ trait AccessToken
      * 加载缓存
      */
     private function loadCache(){
-         $data=$this->config->getCache()->get($this->getAccessTokenNameSpace());//获取缓存
-         $this->accessToken=$data['accessToken']??'';
-         $this->expireTime=$data['expireTime']??0;
+         $this->accessToken=$this->config->getCache()->get($this->getAccessTokenNameSpace());//获取缓存
     }
     /**
      * 获取令牌
      * @return string
      */
-    public function getAccessToken():string{
+    public function getAccessToken(){
            $this->loadCache();//加载缓存
            if(!$this->isExpired())
                return $this->accessToken;//没有过期,直接获取
         $params=['appkey'=>$this->config->getAppId(),'appsecret'=>$this->config->getAppSecret()];
-        $response = $this->handleResponse(
-            $this->request('get','/gettoken?'.http_build_query($params))
-        );
+        $response =$this->request('get','/gettoken?'.http_build_query($params));
+        if($response->statusCode!=200)
+            throw new BadQueryDingTalkExection('令牌获取失败');
         $this->accessToken = $response->body['access_token'];
         $this->expireTime = $response->body['expires_in'] + time();
         $this->config->getCache()->set($this->getAccessTokenNameSpace(),$this->accessToken,$response->body['expires_in']);
@@ -61,7 +60,7 @@ trait AccessToken
      * @return bool
      */
     private function isExpired():bool{
-        if (isset($this->accessToken) && $this->expireTime<time())
+        if (!empty($this->accessToken))
             return false;
         return true;
     }

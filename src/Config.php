@@ -18,14 +18,15 @@ final class Config
    protected ?string $app_secret;
    protected ?string $agent_id;
    protected $access_token;
+   protected int $ttl=0;
    protected ?CacheInterface $cache;
    public function __construct(array $config=[]){
        isset($config['app_id']) && $this->app_id = (string) $config['app_id'];
        isset($config['app_secret']) && $this->app_secret = (string) $config['app_secret'];
        isset($config['agent_id']) && $this->agent_id = (string) $config['agent_id'];
-       isset($config['access_token']) && $this->access_token = (string) $config['access_token'];
+       isset($config['ttl']) && $this->ttl = (string) $config['ttl'];
        isset($config['base_uri']) && $this->base_uri = (string) $config['base_uri'];
-       $this->cache=isset($config['cache'])?$config['cache']:(new FileCache());
+       $this->cache=isset($config['cache'])&&$config['cache'] instanceof CacheInterface?$config['cache']:(new FileCache());
    }
 
     /**
@@ -69,6 +70,7 @@ final class Config
      * @return CacheInterface
      */
    public function getCache():CacheInterface{
+      return new FileCache();
       return $this->cache;
    }
 }

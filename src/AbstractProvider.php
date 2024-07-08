@@ -30,7 +30,7 @@ abstract class AbstractProvider
          if(strpos($uri,'/')===false)
              $uri='/'.$uri;
          $header=['Content-Type'=>'application/json'];
-         $request=new RequestClient($method,$this->config->getBaseUri().$uri,$options,$header);
+         $request=new RequestClient($method,$this->config->getBaseUri().$uri,$options,[]);
          return $this->handleResponse(
              ClientFactory::send($request)
          );
@@ -40,12 +40,12 @@ abstract class AbstractProvider
      * 请求处理--钉钉请求是json
      * @param ResponseClient $response
      */
-  protected function handleResponse(ResponseClient $response){
+  protected function handleResponse(ResponseClient $response):ResponseClient{
         if($response->statusCode!=200)
             throw new BadQueryDingTalkExection($response->error);
-      $body = json_decode($response->body,true);
+      $body =is_array($response->body)?$response->body:json_decode($response->body,true);
       if ($body['errcode'] != 0)
           return new ResponseClient($body['errcode'], null, [], null, $body['errmsg']);
-      return new ResponseClient($response->statusCode, $response->duration, $response->headers, $body);
+      return new ResponseClient($response->statusCode, $response->duration,$response->headers,$body);
   }
 }

@@ -16,15 +16,23 @@ use Psr\Container\ContainerInterface;
 
 class ApplicationFactory
 {
-    public function __invoke(ContainerInterface $container)
-    {
+    private $app;
+    public function __construct(protected ContainerInterface $container){
         $config = $container->get(ConfigInterface::class)->get('dingtalk', []);
-        return new Application(new Config([
+        $this->app=new Application(new Config([
             'app_id' => $config['app_id'] ?? null,
             'app_secret' => $config['app_secret'] ?? null,
             'agent_id' => $config['agent_id'] ?? null,
             'access_token' => $config['access_token'] ?? null,
             'cache' => $config['cache'] ?? null,
         ]));
+    }
+    /**
+     * 获取具体的执行引擎
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name){
+        return $this->app->{$name};
     }
 }

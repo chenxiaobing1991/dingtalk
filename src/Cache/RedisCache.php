@@ -3,6 +3,8 @@
 
 namespace Cxb\DingTalk\Cache;
 
+use Hyperf\Redis\Redis;
+
 /**
  * mix \Redis
  * Class RedisCache
@@ -10,9 +12,8 @@ namespace Cxb\DingTalk\Cache;
  */
 class RedisCache implements CacheInterface
 {
-    private $redis;//缓存配置
-    public function __construct($redis){
-         $this->redis=$redis;
+    public function __construct(protected Redis $redis){
+
     }
 
     /**
@@ -29,8 +30,8 @@ class RedisCache implements CacheInterface
      * @param string $name
      * @param $data
      */
-    public function set(string $name, $data,$expire)
+    public function set(string $name, $data,$ttl)
     {
-        $this->redis->set($name,$data);
+        $this->redis->set($name,$data,$ttl);
     }
 }

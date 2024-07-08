@@ -24,7 +24,7 @@ class UserProvider extends AbstractProvider
     public function getListByDeptId(int $dept_id,$limit=10,$next_cursor=0):ResponseClient {
         $filter=['dept_id'=>$dept_id, 'cursor'=>$next_cursor, 'size'=>$limit];
         $response=$this->request('post', '/topapi/v2/user/list?access_token='.$this->getAccessToken(),$filter);
-        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response['result']??null,$response->error);
+        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response->body['result']??null,$response->error);
     }
 
     /**
@@ -34,6 +34,6 @@ class UserProvider extends AbstractProvider
      */
     public function getIdByMobile(int $mobile){
         $response=$this->request('post', '/topapi/v2/user/getbymobile?access_token='.$this->getAccessToken(),['mobile' => $mobile]);
-        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response['result']??null,$response->error);
+        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response->body['result']??null,$response->error);
     }
 }

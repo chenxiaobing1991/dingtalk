@@ -19,6 +19,6 @@ class DepartmentProvider extends AbstractProvider
      */
     public function getList(){
         $response=$this->request('post', '/topapi/v2/department/listsub?access_token='.$this->getAccessToken());
-        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response['result']??null,$response->error);
+        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$response->body['result']??null,$response->error);
     }
 }
