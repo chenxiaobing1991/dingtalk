@@ -21,9 +21,9 @@
   ],
   "require": {
     "php": ">=8.0",
-    "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
-    "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
-    "guzzlehttp/promises": "^1.4.0 || ^2.0",
+    "guzzlehttp/guzzle": "^6.5.8",
+    "guzzlehttp/psr7": "^1.9.1",
+    "guzzlehttp/promises": "^1.4.0",
     "cxb1991/guzzle_https": "dev-master",
     "hyperf/contract": "~3.0.0",
     "hyperf/utils": "~3.0.0",
