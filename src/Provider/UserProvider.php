@@ -5,6 +5,7 @@ namespace Cxb\DingTalk\Provider;
 
 
 use Cxb\DingTalk\AbstractProvider;
+use Cxb\DingTalk\Exception\BadQueryDingTalkExection;
 use Cxb\GuzzleHttp\ResponseClient;
 
 /**
@@ -14,6 +15,27 @@ use Cxb\GuzzleHttp\ResponseClient;
  */
 class UserProvider extends AbstractProvider
 {
+    /**
+     * 通过部门编号获取部门ID
+     * @param int $dept_id
+     * @param int $limit
+     * @param int $next_cursor
+     * @return ResponseClient
+     */
+    public function getAllByDeptId(int $dept_id):ResponseClient {
+        $next_cursor=0;
+        $list=[];
+        while(true){
+            $response=$this->getListByDeptId($dept_id,50,$next_cursor);
+            if($response->statusCode!=200)
+                return $response;
+            $list=array_merge($list,$response->body['list']??[]);
+            if (!$response->body['has_more'])
+                break;
+            $next_cursor = $response->body['next_cursor'];
+        }
+        return new ResponseClient($response->statusCode,$response->duration,$response->headers,$list,$response->error);
+    }
     /**
      * 通过部门编号获取部门ID
      * @param int $dept_id

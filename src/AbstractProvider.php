@@ -26,11 +26,10 @@ abstract class AbstractProvider
      * @param array $options
      * @param array $header
      */
-  public function request(string $method,$uri,array $options=[]):ResponseClient{
-         if(strpos($uri,'/')===false)
-             $uri='/'.$uri;
-         $header=['Content-Type'=>'application/json'];
-         $request=new RequestClient($method,$this->config->getBaseUri().$uri,$options,[]);
+  public function request(string $method,$uri,array $options=[],array $header=[]):ResponseClient{
+         if(strpos($uri,'/')===0)
+             $uri=$this->config->getBaseUri().$uri;
+         $request=new RequestClient($method,$uri,$options,$header);
          return $this->handleResponse(
              ClientFactory::send($request)
          );

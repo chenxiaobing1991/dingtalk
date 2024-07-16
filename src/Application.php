@@ -5,6 +5,7 @@ namespace Cxb\DingTalk;
 use Cxb\DingTalk\Exception\BadQueryDingTalkExection;
 use Cxb\DingTalk\Provider\AsyncProvider;
 use Cxb\DingTalk\Provider\DepartmentProvider;
+use Cxb\DingTalk\Provider\EmployeeProvider;
 use Cxb\DingTalk\Provider\UserProvider;
 
 /**
@@ -17,7 +18,8 @@ class Application
     protected array $alias = [
         'user'=>UserProvider::class,
         'dept'=>DepartmentProvider::class,
-        'async'=>AsyncProvider::class
+        'async'=>AsyncProvider::class,
+        'employee'=>EmployeeProvider::class
     ];
     protected array $providers = [];
 
