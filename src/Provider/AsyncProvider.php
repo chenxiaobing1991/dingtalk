@@ -30,4 +30,19 @@ class AsyncProvider extends  AbstractProvider
         $response=$this->request('post', '/topapi/message/corpconversation/asyncsend_v2?access_token='.$this->getAccessToken(),$params);
         return $response;
     }
+
+    /**
+     * 通过手机号发送消息
+     * @param $mobile
+     * @param string $content
+     * @param string $type
+     */
+    public function sendByMobile($mobile,string $content,string $type='text'):ResponseClient{
+        $user=make(UserProvider::class,['app'=>$this->app,'config'=>$this->config]);
+        $res=$user->getIdByMobile(intval($mobile));
+        if($res->statusCode!=200)
+            return $res;
+        $userid=$res->body['userid']??'';
+        return $this->send($userid,$content,$type);
+    }
 }
