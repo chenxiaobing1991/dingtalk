@@ -70,7 +70,6 @@ final class Config
      * @return CacheInterface
      */
    public function getCache():CacheInterface{
-      return new FileCache();
       return $this->cache;
    }
 }
