@@ -26,7 +26,7 @@ final class Config
        $this->agent_id=isset($config['agent_id'])?(string) $config['agent_id']:'';
        $this->ttl=isset($config['ttl'])?(int) $config['ttl']:60 * 60;
        $this->base_uri=isset($config['base_uri'])?(string) $config['base_uri']:$this->base_uri;
-       $this->cache=isset($config['cache'])&&$config['cache'] instanceof CacheInterface?(string) $config['cache']:(new FileCache());
+       $this->cache=isset($config['cache'])&&$config['cache'] instanceof CacheInterface? $config['cache']:(new FileCache());
    }
 
     /**
