@@ -8,7 +8,7 @@ namespace Cxb\DingTalk\Exception;
  * Class BadQueryDingTalkExection
  * @package Cxb\HyperfDingTalk\Exception
  */
-class BadQueryDingTalkExection extends \Exception
+class BadQueryDingTalkException extends \Exception
 {
     protected $code=10001;
 }
