@@ -16,6 +16,7 @@ use Cxb\DingTalk\Exception\BusinessException;
 use Psr\Container\ContainerInterface;
 use Hyperf\Context\ApplicationContext;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use \Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
 /**
  * Class AbstractDriver
@@ -45,10 +46,19 @@ abstract class AbstractDriver implements DriverInterface
      * 容器实例
      * @return ContainerInterface
      */
-    function getContainer(): ContainerInterface
+    public function getContainer(): ContainerInterface
     {
         return ApplicationContext::getContainer();
     }
+
+    /**
+     * @return ValidatorFactoryInterface
+     */
+    public function getValidator(): ValidatorFactoryInterface
+    {
+        return $this->getContainer()->get(ValidatorFactoryInterface::class);
+    }
+
 
     /**
      * 时间驱动调度器

@@ -7,6 +7,7 @@ namespace Cxb\DingTalk;
 use Cxb\DingTalk\Contract\DriverInterface;
 use Cxb\DingTalk\Contract\ManagerInterface;
 use Cxb\DingTalk\Driver\DepartmentDriver;
+use Cxb\DingTalk\Driver\MessageDriver;
 use Cxb\DingTalk\Driver\UserDriver;
 use Cxb\DingTalk\Exception\BusinessException;
 use function Hyperf\Support\make;
@@ -15,14 +16,15 @@ use function Hyperf\Support\make;
  * Class Driver
  * @package Cxb\DingTalk
  */
-class Driver implements DriverInterface,ManagerInterface
+class Driver implements DriverInterface, ManagerInterface
 {
     /**
      * @var array|string[]
      */
     private array $alias = [
         'user' => UserDriver::class,
-        'dept' => DepartmentDriver::class
+        'dept' => DepartmentDriver::class,
+        'async' => MessageDriver::class
     ];
 
     private ?array $drivers;

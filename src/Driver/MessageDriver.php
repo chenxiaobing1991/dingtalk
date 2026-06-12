@@ -15,6 +15,8 @@ use Hyperf\Coroutine\Parallel;
  */
 class MessageDriver extends AbstractDriver
 {
+
+    public const PROCESS_BASE_PATH = '/topapi/message/corpconversation';
     /**
      * @param string $userid
      * @param string $content
@@ -30,7 +32,7 @@ class MessageDriver extends AbstractDriver
             'userid_list' => $userid,
             'msg' => json_encode(['msgtype' => $type, 'text' => ['content' => $content]], true)
         ], $filter);
-        return $this->request('/topapi/message/corpconversation/asyncsend_v2?access_token=' . $this->getAccessToken(), 'POST',$filter);
+        return $this->request(self::PROCESS_BASE_PATH.'/asyncsend_v2?access_token=' . $this->getAccessToken(), 'POST',$filter);
     }
 
     /**
@@ -61,7 +63,7 @@ class MessageDriver extends AbstractDriver
      */
     public function remove(mixed $msg_id): mixed
     {
-        return $this->request('/topapi/message/corpconversation/recall?access_token=' . $this->getAccessToken(),'POST', [
+        return $this->request(self::PROCESS_BASE_PATH.'/recall?access_token=' . $this->getAccessToken(),'POST', [
             'agent_id' => $this->config->get('agent_id'),
             'msg_task_id' => $msg_id
         ]);
