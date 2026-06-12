@@ -25,6 +25,6 @@ class DepartmentDriver extends AbstractDriver
      */
     public function list(): array
     {
-        return $this->request('post', '/topapi/v2/department/listsub?access_token=' . $this->getAccessToken());
+        return $this->request( '/topapi/v2/department/listsub?access_token=' . $this->getAccessToken(),'GET');
     }
 }

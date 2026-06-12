@@ -50,7 +50,7 @@ class UserDriver extends AbstractDriver
         if (!isset($filter['dept_id']))
             throw new BusinessException(sprintf('dept_id is required'));
         $limit = intval($filter['size'] ?? 50);
-        $filter = ['dept_id' => $filter['dept_id'], 'cursor' => $filter['cursor'], 'size' => $limit];
+        $filter = ['dept_id' => $filter['dept_id'], 'cursor' => $filter['cursor']??0, 'size' => $limit];
         $result = $this->request('/topapi/v2/user/list?access_token=' . $this->getAccessToken(),'POST', $filter);
         $list = $result['list'] ?? [];
         if (($result['has_more'] ?? false)) {

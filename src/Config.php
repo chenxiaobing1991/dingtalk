@@ -64,6 +64,8 @@ final class Config
     public function getCache(): CacheInterface
     {
         $cache = $this->get('cache');
+        if ($cache instanceof \Closure)
+            $cache = $cache();
         return !$cache instanceof CacheInterface ? new FileCache() : $cache;
     }
 }

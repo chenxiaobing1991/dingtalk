@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Cxb\DingTalk;
 
 use Cxb\DingTalk\Contract\DriverInterface;
+use Cxb\DingTalk\Driver\AuthDriver;
 use Cxb\DingTalk\Event\AfterHandler;
 use Cxb\DingTalk\Event\BeforeHandler;
 use Cxb\DingTalk\Event\FailHandler;
@@ -62,17 +63,9 @@ abstract class AbstractDriver implements DriverInterface
      * 获取令牌
      * @return string
      */
-    public function getAccessToken()
+    public function getAccessToken(): ?string
     {
-        $params = ['appkey' => $this->config->getAppId(), 'appsecret' => $this->config->getAppSecret()];
-        $key = md5(json_encode($params));
-        $accessToken = $this->config->getCache()->get($key);
-        if (!$accessToken) {
-            $body = $this->request('get', '/gettoken?' . http_build_query($params));
-            $accessToken = $body['access_token'];
-            $this->config->getCache()->set($key, $accessToken, $body['expires_in']);
-        }
-        return $accessToken;
+        return $this->driver->get(AuthDriver::class)->getAccessToken();
     }
 
     /**
@@ -85,10 +78,12 @@ abstract class AbstractDriver implements DriverInterface
     protected function request(string $path, string $method = 'GET', $body = null, array $headers = []): mixed
     {
         try {
+            //$headers=array_merge(['Content-Type'=>'application/json'],$headers);
             $request = new RequestClient($method, $this->config->getUri() . $path, $body, $headers);
             $this->getEventDispatcher()?->dispatch(new BeforeHandler($this, $request));
             $result = $this->handleResponse(ClientFactory::send($request));
             $this->getEventDispatcher()?->dispatch(new AfterHandler($this, $result));
+            return $result;
         } catch (\Throwable $throwable) {
             $this->getEventDispatcher()?->dispatch(new FailHandler($this, $throwable));
             throw $throwable;
