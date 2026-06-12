@@ -52,11 +52,19 @@ abstract class AbstractDriver implements DriverInterface
     }
 
     /**
-     * @return ValidatorFactoryInterface
+     * @param array $params
+     * @param array $rules
+     * @param array $message
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function getValidator(): ValidatorFactoryInterface
+    public function validate(array $params, array $rules, array $message = []): void
     {
-        return $this->getContainer()->get(ValidatorFactoryInterface::class);
+        $validator = $this->getContainer()->get(ValidatorFactoryInterface::class);
+        $validator = $validator->make($params, $rules, $message);
+        if ($validator->fails()) {
+            throw new BusinessException($validator->errors()->first());
+        }
     }
 
 

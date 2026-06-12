@@ -65,9 +65,5 @@ class ProcessDriver extends AbstractDriver
         return $this->request(self::PROCESS_BASE_PATH . '/get?access_token?' . $this->getAccessToken(), 'POST', ['process_instance_id' => $process_id]);
     }
 
-    public function comment()
-    {
-    }
-
 
 }
