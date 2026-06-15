@@ -45,6 +45,8 @@ abstract class AbstractHandler implements HandlerInterface
         return $this->params;
     }
 
+
+
     /**
      * @return bool
      */
@@ -64,6 +66,8 @@ abstract class AbstractHandler implements HandlerInterface
             throw new BusinessException('验签失败');
         return true;
     }
+
+    
 
     /**
      * @return mixed

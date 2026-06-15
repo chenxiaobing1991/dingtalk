@@ -21,11 +21,11 @@ class ProcessCommentDriver extends AbstractDriver
     {
         $this->validate($params, [
             'text' => 'require|string',
-            'comment_userid' => 'require'
+            'commentUserId' => 'require'
         ], [
             'comment_userid.require' => '评论人userid必填'
         ]);
-        $params['process_instance_id'] = $process_id;
+        $params['processInstanceId'] = $process_id;
         return $this->request('/topapi/process/instance/comment/add', 'POST', $params);
     }
 }

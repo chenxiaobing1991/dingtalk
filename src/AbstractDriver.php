@@ -117,7 +117,7 @@ abstract class AbstractDriver implements DriverInterface
             throw new BadQueryDingTalkException($response->error);
         $body = is_array($response->body) ? $response->body : json_decode($response->body, true);
         if ($body['errcode'] != 0)
-            return new BusinessException($body['errmsg'], $body['errcode']);
+            throw new BusinessException($body['errmsg'], $body['errcode']);
         return $body;
     }
 
