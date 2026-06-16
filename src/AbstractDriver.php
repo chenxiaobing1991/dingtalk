@@ -95,9 +95,20 @@ abstract class AbstractDriver implements DriverInterface
      */
     protected function request(string $path, string $method = 'GET', $body = null, array $headers = []): mixed
     {
+        return $this->baseRequest($this->config->getUri() . $path, $method, $body, $headers);
+    }
+
+    /**
+     * @param string $url
+     * @param string $method
+     * @param null $body
+     * @param array $headers
+     * @return mixed
+     */
+    final protected function baseRequest(string $url, string $method = 'GET', $body = null, array $headers = []): mixed
+    {
         try {
-            //$headers=array_merge(['Content-Type'=>'application/json'],$headers);
-            $request = new RequestClient($method, $this->config->getUri() . $path, $body, $headers);
+            $request = new RequestClient($method, $url, $body, $headers);
             $this->getEventDispatcher()?->dispatch(new BeforeHandler($this, $request));
             $result = $this->handleResponse(ClientFactory::send($request));
             $this->getEventDispatcher()?->dispatch(new AfterHandler($this, $result));
@@ -116,7 +127,7 @@ abstract class AbstractDriver implements DriverInterface
         if ($response->statusCode != 200)
             throw new BadQueryDingTalkException($response->error);
         $body = is_array($response->body) ? $response->body : json_decode($response->body, true);
-        if ($body['errcode'] != 0)
+        if (isset($body['errcode'])&&$body['errcode'] != 0)
             throw new BusinessException($body['errmsg'], $body['errcode']);
         return $body;
     }

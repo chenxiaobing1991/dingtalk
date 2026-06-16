@@ -34,17 +34,17 @@ class FormDriver extends AbstractDriver
         $filter['agentid'] = (int)$this->config->get('agent_id');
         $this->validate($filter,
             [
-                'name' => 'require|string',
-                'description' => 'require|string',
+                'name' => 'required|string',
+                'description' => 'required|string',
                 'form_component_list.*.component_name' => Rule::in(FormConstant::FORM_COMPONENT_TYPE_LIST),
-                'form_component_list.*.props.id' => 'require|string|max:22',
-                'form_component_list.*.props.label' => 'require|string'
+                'form_component_list.*.props.id' => 'required|string|max:22',
+                'form_component_list.*.props.label' => 'required|string'
             ], [
                 'form_component_list.*.component_name.in' => '表单名称仅支持[' . implode(',', FormConstant::FORM_COMPONENT_TYPE_LIST) . ']',
-                'form_component_list.*props.id.require' => '表单ID必填',
+                'form_component_list.*props.id.required' => '表单ID必填',
                 'form_component_list.*props.id.string' => '表单ID必须是字符串',
                 'form_component_list.*props.id.max' => '表单ID不能超过22个字符',
-                'form_component_list.*props.label.require' => '表单名称必填',
+                'form_component_list.*props.label.required' => '表单名称必填',
                 'form_component_list.*props.label.string' => '表单名称必须是字符串',
             ]);
         return $this->request('/topapi/process/save', 'POST', ['saveProcessRequest'=>$filter]);

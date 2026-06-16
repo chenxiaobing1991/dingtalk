@@ -58,6 +58,14 @@ final class Config
     }
 
     /**
+     * @return string
+     */
+    public function getUri1(): string
+    {
+        return (string)$this->get('uri', 'https://api.dingtalk.com');
+    }
+
+    /**
      * 获取缓存
      * @return CacheInterface
      */

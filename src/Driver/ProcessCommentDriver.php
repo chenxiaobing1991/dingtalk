@@ -7,6 +7,7 @@ namespace Cxb\DingTalk\Driver;
 use Cxb\DingTalk\AbstractDriver;
 
 /**
+ * 审批评论
  * Class ProcessCommentDriver
  * @package Cxb\DingTalk\Driver
  */
@@ -21,9 +22,9 @@ class ProcessCommentDriver extends AbstractDriver
     {
         $this->validate($params, [
             'text' => 'require|string',
-            'commentUserId' => 'require'
+            'commentUserId' => 'required'
         ], [
-            'comment_userid.require' => '评论人userid必填'
+            'comment_userid.required' => '评论人userid必填'
         ]);
         $params['processInstanceId'] = $process_id;
         return $this->request('/topapi/process/instance/comment/add', 'POST', $params);

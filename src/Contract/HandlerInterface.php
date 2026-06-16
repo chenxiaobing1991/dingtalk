@@ -29,17 +29,24 @@ interface HandlerInterface
      */
     public function verifySignature(): bool;
 
-    /**
-     * 生成签名
-     * @return string
-     */
-    public function generateSignature(): string;
-
 
     /**
      * @return mixed
      */
     public function handle(): mixed;
+
+    /**
+     * 成功
+     * @param string $msg
+     * @return mixed
+     */
+    public function success(mixed $data = null, string $msg = 'success'): mixed;
+
+    /**
+     * @param \Throwable $throwable
+     * @return mixed
+     */
+    public function error(\Throwable $throwable): mixed;
 
 
 }
