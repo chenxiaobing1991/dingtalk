@@ -21,8 +21,8 @@ class ProcessCommentDriver extends AbstractDriver
     public function create(string $process_id, array $params): mixed
     {
         $this->validate($params, [
-            'text' => 'require|string',
-            'commentUserId' => 'required'
+            'text' => 'required|string',
+            'commentUserId' => 'required|string'
         ], [
             'comment_userid.required' => '评论人userid必填'
         ]);
