@@ -107,14 +107,14 @@ class ProcessDriver extends AbstractDriver
     protected function execute(array $filter): mixed
     {
         $this->validate($filter, [
-            'process_instance_id' => 'require',
-            'actioner_userid' => 'require',
-            'task_id' => 'require',
+            'process_instance_id' => 'required',
+            'actioner_userid' => 'required',
+            'task_id' => 'required',
             'result.in' => Rule::in('agree', 'refuse')
         ], [
-            'process_instance_id.require' => '审批实例ID必填',
-            'actioner_userid.require' => '操作人必填',
-            'task_id.require' => '任务节点id必填',
+            'process_instance_id.required' => '审批实例ID必填',
+            'actioner_userid.required' => '操作人必填',
+            'task_id.required' => '任务节点id必填',
             'result.in' => '不支持的审批操作'
         ]);
         $result = $this->request('/execute?access_token=' . $this->getAccessToken(), 'POST', ['request' => $filter]);
