@@ -70,7 +70,7 @@ class ProcessDriver extends AbstractDriver
      */
     public function list(array $filter = []): array
     {
-        $filter['start_time'] = isset($filter['start_time'])&&!empty($filter['start_time']) ?$filter['start_time']:strtotime('-10 days') . '000';
+        $filter['start_time'] = isset($filter['start_time']) && !empty($filter['start_time']) ? $filter['start_time'] : strtotime('-10 days') . '000';
         $this->validate($filter, [
             'process_code' => 'required',
             'start_time' => 'integer|required|digits:13',
@@ -153,8 +153,9 @@ class ProcessDriver extends AbstractDriver
      */
     public function file($process_id, $file_id): mixed
     {
-        $info = $this->request('/file/url/get?access_token=' . $this->getAccessToken(), 'POST',
-            ['request' => ['process_instance_id' => $process_id, 'file_id' => $file_id]]
+        $info = $this->request('/topapi/processinstance/file/url/get?access_token=' . $this->getAccessToken(), 'POST',
+            json_encode(['request' => ['process_instance_id' => $process_id, 'file_id' => $file_id]], true),
+            ['Content-Type' => 'application/json']
         );
         return $info['result'] ?? null;
     }
