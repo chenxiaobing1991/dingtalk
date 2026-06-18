@@ -7,7 +7,7 @@ use Cxb\DingTalk\Contract\CacheInterface;
 use Cxb\DingTalk\Cache\FileCache;
 
 return [
-    'default'=>[
+    'default' => [
         'driver' => env('DINGTALK_DEFAULT_DRIVER', 'default'),
     ],
     'drivers' => [
@@ -17,7 +17,8 @@ return [
             'agent_id' => env('DINGTALK_AGENT_ID', ''),
             'cache' => function (): CacheInterface {
                 return new FileCache();
-            }
+            },
+            'alias' => [],
         ]
     ],
 ];

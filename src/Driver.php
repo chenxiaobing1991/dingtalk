@@ -36,6 +36,9 @@ class Driver implements DriverInterface, ManagerInterface
     public function __construct(protected array $config)
     {
         $this->drivers = [];
+        $alias = $config['alias'] ?? null;
+        if (!empty($alias) && is_array($alias))
+            $this->alias = array_merge($this->alias, $alias);
     }
 
     /**
@@ -45,6 +48,7 @@ class Driver implements DriverInterface, ManagerInterface
     {
         return new Config($this->config);
     }
+
 
     /**
      * @param string $name
