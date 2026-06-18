@@ -16,18 +16,18 @@ class WebHookHandler extends AbstractHandler
 {
     public $corpId;
 
-    /**
-     * @return string[]|null
-     */
-    public function getParsedBody(): ?array
-    {
-        return [
-            'signature' => '9405f2cf7d4349073f4e2ae336b59bea8d8f67f9',
-            'timestamp' => '1781575140619',
-            'nonce' => '0eYRsCyZ',
-            'encrypt' => 'HnakwwSaWWxxUr3XJzxt7ND4NgWfZVVvT0gNW0MPkyZ/D/yMm3rL7xc3cmFCwqfKOP85mDnL6+AO30fLDyB1bOiTMgrE//qcTW1oLXG/MMO6N36kJ4s0IJ5MkHuFP5B5'
-        ];
-    }
+//    /**
+//     * @return string[]|null
+//     */
+//    public function getParsedBody(): ?array
+//    {
+//        return [
+//            'signature' => '9405f2cf7d4349073f4e2ae336b59bea8d8f67f9',
+//            'timestamp' => '1781575140619',
+//            'nonce' => '0eYRsCyZ',
+//            'encrypt' => 'HnakwwSaWWxxUr3XJzxt7ND4NgWfZVVvT0gNW0MPkyZ/D/yMm3rL7xc3cmFCwqfKOP85mDnL6+AO30fLDyB1bOiTMgrE//qcTW1oLXG/MMO6N36kJ4s0IJ5MkHuFP5B5'
+//        ];
+//    }
 
     /**
      * 验证签名
