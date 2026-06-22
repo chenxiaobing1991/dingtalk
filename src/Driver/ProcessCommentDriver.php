@@ -26,7 +26,7 @@ class ProcessCommentDriver extends AbstractDriver
         ], [
             'comment_userid.required' => '评论人userid必填'
         ]);
-        $params['processInstanceId'] = $process_id;
+        $params['process_instance_id'] = $process_id;
         return $this->request('/topapi/process/instance/comment/add?access_token='.$this->getAccessToken(), 'POST',
             json_encode(['request'=>$params]),
             ['Content-Type' => 'application/json']
