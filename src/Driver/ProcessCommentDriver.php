@@ -22,7 +22,7 @@ class ProcessCommentDriver extends AbstractDriver
     {
         $this->validate($params, [
             'text' => 'required|string',
-            'commentUserId' => 'required|string'
+            'comment_userid' => 'required|string'
         ], [
             'comment_userid.required' => '评论人userid必填'
         ]);
